@@ -1,15 +1,6 @@
-var http = require("http");
+var fs = require("fs");
 
-const PORT = 8081; 
+var data = fs.readFileSync('input.txt');
 
-http.createServer(function(request, response) {
-    // Send the HTTP header 
-    // HTTP Status: 200 : OK
-    // Content Type: text/plain
-    response.writeHead(200, {'Content-Type': 'text/plain'});
-
-    // Send the response body as "Hello World"
-    response.end('Hello, World\nFrom Command line');
-}).listen(PORT);
-
-console.log("Server running at http://127.0.0.1:%d/", PORT)
+console.log(data.toString());
+console.log("End");
