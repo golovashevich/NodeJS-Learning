@@ -2,18 +2,30 @@ var events = require("events");
 
 var eventEmitter = new events.EventEmitter();
 
-var connectHandler = function connected() {
-    console.log("connection successful");
+var listener1 = function listener1() {
+    console.log("listener1 executed");
+};
 
-    eventEmitter.emit("data_received");
-}
+var listener2 = function listener2() {
+    console.log("listener2 executed");
+};
 
-eventEmitter.on("connection", connectHandler);
+eventEmitter.addListener("connection", listener1);
 
-eventEmitter.on("data_received", function() {
-    console.log("data received successfully");
-});
+eventEmitter.on("connection", listener2);
+
+var eventListeners = require("events").EventEmitter.listenerCount(eventEmitter, "connection");
+
+console.log(eventListeners + " listener(s) listening to connection event");
 
 eventEmitter.emit("connection");
+
+eventEmitter.removeListener("connection", listener1);
+console.log("listener1 will not listen now");
+
+eventEmitter.emit("connection");
+
+eventListeners = require("events").EventEmitter.listenerCount(eventEmitter, "connection");
+console.log(eventListeners + " listener(s) listening to connection event");
 
 console.log("End");
